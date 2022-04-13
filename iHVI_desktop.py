@@ -74,13 +74,13 @@ def calculateIHVI(LST, NDBI, NDVI, directory, progressbar):
 
     df_B_LST = df_B_LST.loc[:, ['SA1_7DIG16', 'mean']]
     df_B_LST.columns = ['SA1', 'LST']
-    df_B_LST['LST'].fillna((df_B_LST['LST'].mean()), inplace=True)
+    df_B_LST['LST'].fillna(method='ffill', inplace=True)
     df_B_NDBI = df_B_NDBI.loc[:, ['SA1_7DIG16', 'mean']]
     df_B_NDBI.columns = ['SA1', 'NDBI']
-    df_B_NDBI['NDBI'].fillna((df_B_NDBI['NDBI'].mean()), inplace=True)
+    df_B_NDBI['NDBI'].fillna(method='ffill', inplace=True)
     df_B_NDVI = df_B_NDVI.loc[:, ['SA1_7DIG16', 'mean']]
     df_B_NDVI.columns = ['SA1', 'NDVI']
-    df_B_NDVI['NDVI'].fillna((df_B_NDVI['NDVI'].mean()), inplace=True)
+    df_B_NDVI['NDVI'].fillna(method='ffill', inplace=True)
     progressbar.update(current_count=30)
 
     # group data
