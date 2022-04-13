@@ -20,16 +20,12 @@ def make_window(theme=None):
     sg.theme(theme)
 
     layout_l = [[sg.T("")], [sg.Text("Input LST File Path: ")], [sg.Input(), sg.FileBrowse()],
-                [sg.T("")], [sg.Text("Input NDBI File Path: ")], [
-        sg.Input(), sg.FileBrowse()],
-        [sg.T("")], [sg.Text("Input NDVI File Path: ")], [
-        sg.Input(), sg.FileBrowse()],
-        [sg.T("")], [sg.Text("Output File Path: ")], [
-        sg.Input(), sg.FolderBrowse()],
-        [sg.T("")], [sg.Button('Start'), sg.ProgressBar(
-            100, orientation='h', size=(20, 20), key='-PROGRESS BAR-')]
-    ]
-    descriptive_layout = [[sg.T('Anything that you would use for asthetics is in this tab!')]]
+                [sg.T("")], [sg.Text("Input NDBI File Path: ")], [sg.Input(), sg.FileBrowse()],
+                [sg.T("")], [sg.Text("Input NDVI File Path: ")], [sg.Input(), sg.FileBrowse()],
+                [sg.T("")], [sg.Text("Input Other Parameters File Path: ")], [sg.Input(), sg.FileBrowse()],
+                [sg.T("")], [sg.Text("Output File Path: ")], [sg.Input(), sg.FolderBrowse()],
+                [sg.T("")], [sg.Button('Start'), sg.ProgressBar(100, orientation='h', size=(20, 20), key='-PROGRESS BAR-')]]
+    descriptive_layout = [[sg.T('Upcoming features!')]]
 
     menu_def = [['&Application', ['E&xit']],
                 ['&Help', ['&About']]]
@@ -46,15 +42,17 @@ def make_window(theme=None):
     return window
 
 
-def calculateIHVI(LST, NDBI, NDVI, directory, progressbar):
+def calculateIHVI(LST, NDBI, NDVI, OtherSix, directory, progressbar):
 
     progressbar.update(current_count=1)
     filepath1 = LST
     filepath2 = NDBI
     filepath3 = NDVI
+    filepath4 = OtherSix
 
     # read data
-    df_other_6 = pd.read_pickle("./othersixparas.pkl")
+    df_other_6 = pd.read_csv(filepath4)
+    # pd.read_pickle("./othersixparas.pkl")
     df_B_LST = pd.read_csv(filepath1)
     progressbar.update(current_count=5)
     df_B_NDBI = pd.read_csv(filepath2)
@@ -175,12 +173,12 @@ def main():
         if event == "Start":
             progress_bar = window['-PROGRESS BAR-']
             progress_bar.update(current_count=0)
-            LST, NDBI, NDVI, directory = values[0], values[1], values[2], values[3]
+            LST, NDBI, NDVI, OtherSix, directory = values[0], values[1], values[2], values[3], values[4]
 
             # 0 and 1 are keys of dictionary `values`
-            print(LST, NDBI, NDVI, directory)
+            print(LST, NDBI, NDVI,OtherSix, directory)
             try:
-                calculateIHVI(LST, NDBI, NDVI, directory, progress_bar)
+                calculateIHVI(LST, NDBI, NDVI, OtherSix, directory, progress_bar)
             except Exception as e:
                 sg.popup(e, keep_on_top=True)
 
