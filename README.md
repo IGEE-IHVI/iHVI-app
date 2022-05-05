@@ -6,14 +6,14 @@ Please use python 3.8+ or higher.
 Environment configuration:
 
 ```console
-pip install PySimpleGUI
+pip install --upgrade PySimpleGUIQt  
 pip install pandas
 pip install scikit-learn
 ```
 
 Or if you are using conda environment, run:
 ```console
-conda install -c conda-forge pysimplegui
+pip install --upgrade PySimpleGUIQt  
 conda install -c anaconda pandas
 conda install -c anaconda scikit-learn
 ```
