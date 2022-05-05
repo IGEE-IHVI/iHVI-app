@@ -13,7 +13,7 @@ pip install scikit-learn
 
 Or if you are using conda environment, run:
 ```console
-pip install --upgrade PySimpleGUIQt  
+conda install pysimpleguiqt
 conda install -c anaconda pandas
 conda install -c anaconda scikit-learn
 ```
