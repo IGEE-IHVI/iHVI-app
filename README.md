@@ -8,14 +8,12 @@ Environment configuration:
 ```console
 pip install --upgrade PySimpleGUIQt  
 pip install pandas
-pip install scikit-learn
 ```
 
 Or if you are using conda environment, run:
 ```console
 conda install pysimpleguiqt
 conda install -c anaconda pandas
-conda install -c anaconda scikit-learn
 ```
 
 Download the code from this repository and run:
