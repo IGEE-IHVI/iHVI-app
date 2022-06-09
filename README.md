@@ -20,3 +20,5 @@ Download the code from this repository and run:
 ```console
 python mainApp.py
 ```
+
+You can directly run "ouput/iHVI.exe" only in windows operating system.
