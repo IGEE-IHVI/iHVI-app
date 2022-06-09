@@ -18,5 +18,7 @@ conda install -c anaconda pandas
 
 Download the code from this repository and run:
 ```console
-python iHVI_desktop.py
+python mainApp.py
 ```
+----
+You can directly run "ouput/iHVI.exe" on windows operating system.
