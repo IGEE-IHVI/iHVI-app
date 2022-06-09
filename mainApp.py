@@ -1,3 +1,9 @@
+
+'''
+Copyright (C) AURIN
+
+'''
+
 import PySimpleGUIQt as sg
 import pandas as pd
 import numpy as np
@@ -149,7 +155,7 @@ def createInforWindow(Text):
     errorWindow.Close()
 
 # check none for reuse
-def checkNoneAndBlack(checkList):
+def checkNoneAndBlank(checkList):
     for e in checkList:
         if e is None:
             return False
@@ -287,14 +293,14 @@ def main():
              
         if event == 'Heat Exposure Index':
             func = event
-            if checkNoneAndBlack([values['LST']]):
+            if checkNoneAndBlank([values['LST']]):
                 LST = values['LST'][0]
                 print(func, LST)
                 calculateProduct(func, progress_bar, LST = LST, OutputPath=values['Output Path'])
                    
         if event == 'Heat Sensitivity Index':
             func = event
-            if checkNoneAndBlack([values['NDVI'],
+            if checkNoneAndBlank([values['NDVI'],
                           values['NDBI'],
                           values['Population density'],
                           values['Age 65+'],
@@ -306,7 +312,7 @@ def main():
               
         if event == 'Adaptive Capability Index':
             func = event
-            if checkNoneAndBlack([values['Education level'],values['Income level']]):
+            if checkNoneAndBlank([values['Education level'],values['Income level']]):
                 EduL, IncL = values['Education level'][0],values['Income level'][0]
                 calculateProduct(func, progress_bar, EduL= EduL, IncL= IncL,OutputPath=values['Output Path'])
   
@@ -314,7 +320,7 @@ def main():
         if event == 'Heat Vulnerability Score':
              
             func = event
-            if checkNoneAndBlack([values['LST' ],values['NDVI' ],values['NDBI' ],values['Population density' ],values['Age 65+' ],values['Age 4-' ],values['Population need care' ],values['Education level' ],values['Income level' ]]):
+            if checkNoneAndBlank([values['LST' ],values['NDVI' ],values['NDBI' ],values['Population density' ],values['Age 65+' ],values['Age 4-' ],values['Population need care' ],values['Education level' ],values['Income level' ]]):
                 LST, NDVI, NDBI, PopDens, Age65, Age4, PopNC, EduL, IncL = values['LST'][0],values['NDVI'][0],values['NDBI'][0],values['Population density'][0],values['Age 65+'][0],values['Age 4-'][0],values['Population need care'][0],values['Education level'][0],values['Income level'][0]
                 calculateProduct(func, progress_bar, LST = LST, NDVI= NDVI, NDBI= NDBI, PopDens= PopDens, Age65= Age65, Age4= Age4, PopNC= PopNC, EduL= EduL, IncL= IncL,OutputPath=values['Output Path'])
 
@@ -322,7 +328,7 @@ def main():
         if event == 'Heat Vulnerability Index':
              
             func = event
-            if checkNoneAndBlack([values['LST' ],values['NDVI' ],values['NDBI' ],values['Population density' ],values['Age 65+' ],values['Age 4-' ],values['Population need care' ],values['Education level' ],values['Income level' ]]):
+            if checkNoneAndBlank([values['LST' ],values['NDVI' ],values['NDBI' ],values['Population density' ],values['Age 65+' ],values['Age 4-' ],values['Population need care' ],values['Education level' ],values['Income level' ]]):
                 LST, NDVI, NDBI, PopDens, Age65, Age4, PopNC, EduL, IncL = values['LST'][0],values['NDVI'][0],values['NDBI'][0],values['Population density'][0],values['Age 65+'][0],values['Age 4-'][0],values['Population need care'][0],values['Education level'][0],values['Income level'][0]
                 calculateProduct(func, progress_bar, LST = LST, NDVI= NDVI, NDBI= NDBI, PopDens= PopDens, Age65= Age65, Age4= Age4, PopNC= PopNC, EduL= EduL, IncL= IncL,OutputPath=values['Output Path'])
 
