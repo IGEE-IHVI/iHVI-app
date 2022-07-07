@@ -24,3 +24,5 @@ python mainApp.py
 You can directly run "output/iHVI.exe" on windows operating system.
 
 \* Note : Please click the 'code' option to download the iHVI zip folder \*
+
+[iHVI User Manual](Documentation.md)
