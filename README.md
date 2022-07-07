@@ -1,5 +1,5 @@
-# iHVI-app
-heat vulnerability index desktop application
+# iHVI webtool
+Heat Vulnerability Index open source desktop toolkit
 
 Please use python 3.8+ or higher.
 
@@ -21,4 +21,6 @@ Download the code from this repository and run:
 python mainApp.py
 ```
 ----
-You can directly run "ouput/iHVI.exe" on windows operating system.
+You can directly run "output/iHVI.exe" on windows operating system.
+
+* Note : Please click the 'code' option to download the iHVI zip folder *
