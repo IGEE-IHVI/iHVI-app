@@ -1,4 +1,4 @@
-# iHVI toolkit
+# iHVI tool
 Heat Vulnerability Index open source desktop toolkit
 
 Please use python 3.8+ or higher.
