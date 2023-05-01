@@ -3,16 +3,18 @@ Heat Vulnerability Index open source desktop toolkit
 
 Please use python 3.8+ or higher.
 
+Please adjust your PC/laptop's display scale to 100% to avoid squeezed content.
+
 Environment configuration:
 
 ```console
 pip install --upgrade PySimpleGUIQt  
-pip install pandas
+pip install --upgrade pandas
 ```
 
 Or if you are using conda environment, run:
 ```console
-conda install pysimpleguiqt
+conda install -c conda-forge pysimpleguiqt
 conda install -c anaconda pandas
 ```
 
@@ -21,17 +23,11 @@ Download the code from this repository and run:
 python mainApp.py
 ```
 ----
-You can directly run "output/iHVI.exe" on windows operating system.
-
-\* Note : Please click the 'code' option to download the iHVI zip folder \*
-
-
-**Need more information ??????**
+Or you can directly run "output/mainApp/mainApp.exe" on windows operating system.
 
 **Technical documentation**
 
 [iHVI User Manual](Documentation.md)
-
 
 
 **iHVI publication**
