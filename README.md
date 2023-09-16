@@ -1,8 +1,6 @@
-# iHVI tool
-Heat Vulnerability Index open source desktop toolkit
+# iHVI tool - Heat Vulnerability Index open source desktop toolkit
 
 Access to publication - iHVI: AN OPEN-SOURCE TOOLKIT FOR CONSTRUCTING INTEGRATED HEAT VULNERABILITY INDEX IN AUSTRALIA : https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLVIII-4-W5-2022/175/2022/isprs-archives-XLVIII-4-W5-2022-175-2022.pdf 
-
 
 ## Summary
 The iHVI toolkit constructs heat sensitivity, heat adaptive capability indicators, and composite heat vulnerability index, which enables modelling of the relationships between heat, environmental and socio-economic factors. This desktop-based application is a first nationwide, dynamic and interactive heat vulnerability assessment toolkit with enhanced workflow, automated analysis and modelling tools, so the indicators and indices can be updated and constructed by the users to serve more applications.  
