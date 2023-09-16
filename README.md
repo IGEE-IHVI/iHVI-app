@@ -9,7 +9,7 @@ The iHVI toolkit constructs heat sensitivity, heat adaptive capability indicator
 The diagram shows the conceptual heat vulnerability assessment framework. It is a four-stage assessment framework to derive heat vulnerability index by calculating heat exposure index, heat sensitivity index and adaptive capability index for intervention strategies. 
 HVI is calculated as : Heat Vulnerability Index (HVI) = Heat Exposure index + Heat Sensitivity index - Adaptive Capacity Index 
 
-<img width="100%" alt="image" src="https://github.com/IGEE-IHVI/iHVI-app/blob/main/HVI%20framework.png">
+<img width="100%" alt="image" src="https://github.com/IGEE-IHVI/iHVI-app/blob/main/HVI%20conceptual%20framework.png">
 
 ## iHVI application
 
