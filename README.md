@@ -35,7 +35,7 @@ python mainApp.py
 ----
 Or you can directly run "output/mainApp/mainApp.exe" on windows operating system.
 
-##Technical documentation
+## Technical documentation
 
 [iHVI User Manual](Documentation.md)
 
