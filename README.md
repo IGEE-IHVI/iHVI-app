@@ -37,7 +37,7 @@ Or you can directly run "output/mainApp/mainApp.exe" on windows operating system
 
 ## Technical documentation
 
-[iHVI User Manual](Documentation.md)
+Refer to [iHVI User Manual](Documentation.md) for more detailed explanation on iHVI operation
 
 
 **iHVI publication**
