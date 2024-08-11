@@ -14,11 +14,12 @@ HVI is calculated as : Heat Vulnerability Index (HVI) = Heat Exposure index + He
 
 The iHVI desktop toolkit  was developed in the Python 3 environment. The primary packages consist of PySimpleGUIQt, Pandas, Numpy, and other Python builtin packages. PySimpleGUIQt is an integrated package for frontend user interface development. The Pandas and Numpy are mainly used for the heat vulnerability index and heat vulnerability score calculation functions’ development. The software compilation is based on the auto-pyto-exe converter, which is a Python-based converter that can compile Python files (.py) to executable files (.exe). The executable file will not require manual installation after downloading. 
 
-To run the iHVI toolkit : 
+## How to Run the iHVI Toolkit
+1. **Download the Latest Release**: Locate the most recent version of the iHVI Toolkit on the right side of this repository and download the release package.
 
-You can find the newest release on the right hand side of this repo.
+2. **Extract the Files**: After downloading, unzip the package to your preferred location.
 
-After downloading and unzipping the assert, execute 'iHVI Toolkit\iHVI Toolkit.exe'.
+3. **Launch the Toolkit**: Navigate to the extracted folder and run the executable file by double-clicking on *iHVI Toolkit\iHVI Toolkit.exe*.
 
 ## Technical documentation
 
