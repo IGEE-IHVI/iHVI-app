@@ -10,6 +10,21 @@ import numpy as np
 import webbrowser
 import sys
 import os
+from ctypes import windll
+from jenkspy import JenksNaturalBreaks
+import traceback
+
+def get_ppi():
+    LOGPIXELSX = 88
+    LOGPIXELSY = 90
+    user32 = windll.user32
+    user32.SetProcessDPIAware()
+    dc = user32.GetDC(0)   
+    pix_per_inch = windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
+    print("Horizontal DPI is", windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX))
+    print("Vertical DPI is", windll.gdi32.GetDeviceCaps(dc, LOGPIXELSY))
+    user32.ReleaseDC(0, dc)
+    return pix_per_inch
 
 fileIndex = {
    'LST': 0, 
@@ -78,57 +93,60 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 # make UI
-def make_window():
-    HVIMap = np.full((17,9), [sg.Text(makeText(),size = (170,20),justification='c')])
+def make_window(dpi):
+    dotSize = (170,20)
+    HVIMap = np.full((17,9), [sg.Text(makeText(),size =dotSize,justification='c')])
     # mid
-    HVIMap[2,:] = sg.Text(makeText('mid'),size = (170,20),justification='c')
+    HVIMap[2,:] = sg.Text(makeText('mid'),size =dotSize,justification='c')
     for i in range(9):
-        HVIMap[4,i] = sg.Text(makeText('X'),size = (170,20),justification='c',key = f'_{i}_')
-    HVIMap[5,[0,-1,-2]] = sg.Text(makeText('mid'),size = (170,20),justification='c')
-    HVIMap[6,[0,4,-1,-2]] = sg.Text(makeText('mid'),size = (170,20),justification='c')
-    HVIMap[8,[2,4,6]] = sg.Text(makeText('mid'),size = (170,20),justification='c')
-    HVIMap[[10,11,13,14], 4] = sg.Text(makeText('mid'),size = (170,20),justification='c')
+        HVIMap[4,i] = sg.Text(makeText('X'),size =dotSize,justification='c',key = f'_{i}_')
+    HVIMap[5,[0,-1,-2]] = sg.Text(makeText('mid'),size =dotSize,justification='c')
+    HVIMap[6,[0,4,-1,-2]] = sg.Text(makeText('mid'),size =dotSize,justification='c')
+    HVIMap[8,[2,4,6]] = sg.Text(makeText('mid'),size =dotSize,justification='c')
+    HVIMap[[10,11,13,14], 4] = sg.Text(makeText('mid'),size =dotSize,justification='c')
     # right
-    HVIMap[1,[0,3]] = sg.Text(makeText('right'),size = (170,20),justification='c')
+    HVIMap[1,[0,3]] = sg.Text(makeText('right'),size =dotSize,justification='c')
     # left
-    HVIMap[1,[2,8]] = sg.Text(makeText('left'),size = (170,20),justification='c')
+    HVIMap[1,[2,8]] = sg.Text(makeText('left'),size =dotSize,justification='c')
     # midLR
-    HVIMap[1,[1,5]] = sg.Text(makeText('midLR'),size = (170,20),justification='c')
-    HVIMap[5,2:6] =  sg.Text(makeText('midLR'),size = (170,20),justification='c')
-    HVIMap[9,4] =  sg.Text(makeText('midLR'),size = (170,20),justification='c')
-    HVIMap[7,7] =  sg.Text(makeText('midLR'),size = (170,20),justification='c')
+    HVIMap[1,[1,5]] = sg.Text(makeText('midLR'),size =dotSize,justification='c')
+    HVIMap[5,2:6] =  sg.Text(makeText('midLR'),size =dotSize,justification='c')
+    HVIMap[9,4] =  sg.Text(makeText('midLR'),size =dotSize,justification='c')
+    HVIMap[7,7] =  sg.Text(makeText('midLR'),size =dotSize,justification='c')
     # midL
-    HVIMap[5,6] =  sg.Text(makeText('midL'),size = (170,20),justification='c')
-    HVIMap[9,6] =  sg.Text(makeText('midL'),size = (170,20),justification='c')
-    HVIMap[7,8] =  sg.Text(makeText('midL'),size = (170,20),justification='c')
+    HVIMap[5,6] =  sg.Text(makeText('midL'),size =dotSize,justification='c')
+    HVIMap[9,6] =  sg.Text(makeText('midL'),size =dotSize,justification='c')
+    HVIMap[7,8] =  sg.Text(makeText('midL'),size =dotSize,justification='c')
     # midR
-    HVIMap[5,1] =  sg.Text(makeText('midR'),size = (170,20),justification='c')
-    HVIMap[7,0] =  sg.Text(makeText('midR'),size = (170,20),justification='c')
-    HVIMap[9,2] =  sg.Text(makeText('midR'),size = (170,20),justification='c')
+    HVIMap[5,1] =  sg.Text(makeText('midR'),size =dotSize,justification='c')
+    HVIMap[7,0] =  sg.Text(makeText('midR'),size =dotSize,justification='c')
+    HVIMap[9,2] =  sg.Text(makeText('midR'),size =dotSize,justification='c')
     # LR
-    HVIMap[1,[4,6,7]] =  sg.Text(makeText('LR'),size = (170,20),justification='c')
-    HVIMap[7,1] =  sg.Text(makeText('LR'),size = (170,20),justification='c')
-    HVIMap[9,[3,5]] =  sg.Text(makeText('LR'),size = (170,20),justification='c')
+    HVIMap[1,[4,6,7]] =  sg.Text(makeText('LR'),size =dotSize,justification='c')
+    HVIMap[7,1] =  sg.Text(makeText('LR'),size =dotSize,justification='c')
+    HVIMap[9,[3,5]] =  sg.Text(makeText('LR'),size =dotSize,justification='c')
     # file input
-    HVIMap[3,0] = sg.FileBrowse(size = (170,40),button_text='LST', target='LST', enable_events = True,button_color=('white', '#C5003C'))
-    HVIMap[3,1] = sg.FileBrowse(size = (170,40),button_text='NDVI',target='NDVI', enable_events = True,button_color=('black', 'gold')) 
-    HVIMap[3,2] = sg.FileBrowse(size = (170,40),button_text='NDBI',target='NDBI', enable_events = True,button_color=('black', 'gold')) 
-    HVIMap[3,3] = sg.FileBrowse(size = (170,40),button_text='Population density',target='Population density', enable_events = True,button_color=('black', 'gold'))  
-    HVIMap[3,4] = sg.FileBrowse(size = (170,40),button_text='Age 65+',target='Age 65+', enable_events = True,button_color=('black', 'gold')) 
-    HVIMap[3,5] = sg.FileBrowse(size = (170,40),button_text='Age 4-',target='Age 4-', enable_events = True,button_color=('black', 'gold')) 
-    HVIMap[3,6] = sg.FileBrowse(size = (170,40),button_text='Population need care',target='Population need care', enable_events = True,button_color=('black', 'gold')) 
-    HVIMap[3,7] = sg.FileBrowse(size = (170,40),button_text='Education level',target='Education level', enable_events = True,button_color=('white', 'green')) 
-    HVIMap[3,8] = sg.FileBrowse(size = (170,40),button_text='Income level',target='Income level', enable_events = True,button_color=('white', 'green')) 
+    textSize = (170,40)
+    textFont = ("Helvetica", 48 * 20 /dpi)
+    HVIMap[3,0] = sg.FileBrowse(size = textSize, font=textFont, button_text='LST', target='LST', enable_events = True,button_color=('white', '#C5003C'))
+    HVIMap[3,1] = sg.FileBrowse(size = textSize, font=textFont, button_text='NDVI',target='NDVI', enable_events = True,button_color=('black', 'gold')) 
+    HVIMap[3,2] = sg.FileBrowse(size = textSize, font=textFont, button_text='NDBI',target='NDBI', enable_events = True,button_color=('black', 'gold')) 
+    HVIMap[3,3] = sg.FileBrowse(size = textSize, font=textFont, button_text='Population density',target='Population density', enable_events = True,button_color=('black', 'gold'))  
+    HVIMap[3,4] = sg.FileBrowse(size = textSize, font=textFont, button_text='Age 65+',target='Age 65+', enable_events = True,button_color=('black', 'gold')) 
+    HVIMap[3,5] = sg.FileBrowse(size = textSize, font=textFont, button_text='Age 4-',target='Age 4-', enable_events = True,button_color=('black', 'gold')) 
+    HVIMap[3,6] = sg.FileBrowse(size = textSize, font=textFont, button_text='Population need care',target='Population need care', enable_events = True,button_color=('black', 'gold')) 
+    HVIMap[3,7] = sg.FileBrowse(size = textSize, font=textFont, button_text='Education level',target='Education level', enable_events = True,button_color=('white', 'green')) 
+    HVIMap[3,8] = sg.FileBrowse(size = textSize, font=textFont, button_text='Income level',target='Income level', enable_events = True,button_color=('white', 'green')) 
     # functional buttons - calculation
-    HVIMap[7,2] = sg.Button(size = (170,40),button_text='Heat Exposure Index',border_width=100, button_color=('white', '#C5003C'))
-    HVIMap[7,4] = sg.Button(size = (170,40),button_text='Heat Sensitivity Index',button_color=('black', 'gold'))
-    HVIMap[7,6] = sg.Button(size = (170,40),button_text='Adaptive Capability Index',button_color=('white', 'green'))
+    HVIMap[7,2] = sg.Button(size = textSize, font=textFont, button_text='Heat Exposure Index',border_width=100, button_color=('white', '#C5003C'))
+    HVIMap[7,4] = sg.Button(size = textSize, font=textFont, button_text='Heat Sensitivity Index',button_color=('black', 'gold'))
+    HVIMap[7,6] = sg.Button(size = textSize, font=textFont, button_text='Adaptive Capability Index',button_color=('white', 'green'))
     
-    HVIMap[12,4] = sg.Button(size = (170,40),button_text='Heat Vulnerability Score',button_color=('white', '#063289'))
-    HVIMap[15,4] = sg.Button(size = (170,40),button_text='Heat Vulnerability Index',button_color=('white', '#063289'))
+    HVIMap[12,4] = sg.Button(size = textSize, font=textFont, button_text='Heat Vulnerability Score',button_color=('white', '#063289'))
+    HVIMap[15,4] = sg.Button(size = textSize, font=textFont, button_text='Heat Vulnerability Index',button_color=('white', '#063289'))
 
-    HVIMap[0,1] = sg.Button(size = (170,40),button_text='iGEE',button_color=('black', '#FFFAF0'))
-    HVIMap[0,5] = sg.Button(size = (170,40),button_text='ABS',button_color=('black', '#FFFAF0'))
+    HVIMap[0,1] = sg.Button(size = textSize, font=textFont, button_text='iGEE',button_color=('black', '#FFFAF0'))
+    HVIMap[0,5] = sg.Button(size = textSize, font=textFont, button_text='ABS',button_color=('black', '#FFFAF0'))
 
     # progress bar and select output path
     Status = [[sg.Text('Status'),sg.ProgressBar(100, orientation = 'h', key='-PROGRESS BAR-'),sg.FolderBrowse(button_text ='Select folder', key ='Output Path',target='Output Path', size=(170,30))]]
@@ -173,15 +191,15 @@ def calculateProduct(func, progressbar, LST = None, NDVI= None, NDBI= None, PopD
         
         def formatting(dataframe_, name):
             dataframe = dataframe_
-            dataframe = dataframe.loc[:, ['SA1_7DIG16', 'mean']]
-            dataframe.columns = ['SA1_7DIG16', name]
+            dataframe = dataframe.loc[:, ['SA1_CODE21', 'mean']]
+            dataframe.columns = ['SA1_CODE21', name]
             dataframe[name].fillna(method='ffill', inplace=True)
             return dataframe
         
         def readGroupScaleDataset(dfList_, nameList_ ,progressbar_):
             # read data
             dfList = [pd.read_csv(d) for d in dfList_]
-            Cols = ['SA1_7DIG16']
+            Cols = ['SA1_CODE21']
             Cols.extend(nameList_)
             progressbar_.UpdateBar(current_count=10, max=100)
             for i in range(len(dfList)):
@@ -190,7 +208,7 @@ def calculateProduct(func, progressbar, LST = None, NDVI= None, NDBI= None, PopD
             # group data
             df_target_area = dfList[0]
             for i in range(1, len(dfList)):
-                df_target_area = df_target_area.merge(dfList[i], how='inner', on='SA1_7DIG16')
+                df_target_area = df_target_area.merge(dfList[i], how='inner', on='SA1_CODE21')
             df_target_area.columns = Cols
             progressbar_.UpdateBar(current_count=30, max=100) 
             # scale dataset
@@ -219,11 +237,21 @@ def calculateProduct(func, progressbar, LST = None, NDVI= None, NDBI= None, PopD
             makeOutput(df_target_area)
             progressbar.UpdateBar(current_count=100, max=100) 
             
-        if func == 'Heat Sensitivity Index':
+        # if func == 'Heat Sensitivity Index':
 
+        #     df_target_area, df_target_area_scaled = readGroupScaleDataset([NDVI,NDBI,PopDens,Age65,Age4,PopNC],nameList[1:7].tolist(),progressbar)
+        #     # calculate product
+        #     df_target_area[func] = 1.0/6.0 *df_target_area_scaled[nameList[1:7].tolist()].sum(axis=1)
+        #     progressbar.UpdateBar(current_count=75, max=100) 
+        #     # output
+        #     makeOutput(df_target_area)
+        #     progressbar.UpdateBar(current_count=100, max=100) 
+
+        ## calculation formula changed
+        if func == 'Heat Sensitivity Index':
             df_target_area, df_target_area_scaled = readGroupScaleDataset([NDVI,NDBI,PopDens,Age65,Age4,PopNC],nameList[1:7].tolist(),progressbar)
             # calculate product
-            df_target_area[func] = 1.0/6.0 *df_target_area_scaled[nameList[1:7].tolist()].sum(axis=1)
+            df_target_area[func] = 1.0/6.0 * df_target_area_scaled[nameList[2:7].tolist()].sum(axis=1)-df_target_area_scaled[nameList[1].tolist()]
             progressbar.UpdateBar(current_count=75, max=100) 
             # output
             makeOutput(df_target_area)
@@ -238,29 +266,65 @@ def calculateProduct(func, progressbar, LST = None, NDVI= None, NDBI= None, PopD
             makeOutput(df_target_area)
             progressbar.UpdateBar(current_count=100, max=100) 
             
+        # if func == 'Heat Vulnerability Score':
+        #     df_target_area, df_target_area_scaled = readGroupScaleDataset([LST,NDVI,NDBI,PopDens,Age65,Age4,PopNC,EduL, IncL],nameList.tolist(),progressbar)
+        #     # calculate product
+        #     df_target_area['Heat Exposure Index'] = df_target_area_scaled[nameList[0]]
+        #     df_target_area['Heat Sensitivity Index'] = 1.0/6.0 *df_target_area_scaled[nameList[1:7].tolist()].sum(axis=1)
+        #     df_target_area['Adaptive Capability Index'] = 1.0/2.0*df_target_area_scaled[nameList[7:].tolist()].sum(axis=1)
+        #     df_target_area['Heat Vulnerability Score'] = 1.0/3.0 * (df_target_area[['Heat Exposure Index','Heat Sensitivity Index','Adaptive Capability Index']].sum(axis=1))
+        #     progressbar.UpdateBar(current_count=75, max=100) 
+        #     # output
+        #     makeOutput(df_target_area)
+        #     progressbar.UpdateBar(current_count=100, max=100) 
+
+        ## calculation formula changed    
         if func == 'Heat Vulnerability Score':
             df_target_area, df_target_area_scaled = readGroupScaleDataset([LST,NDVI,NDBI,PopDens,Age65,Age4,PopNC,EduL, IncL],nameList.tolist(),progressbar)
-            # calculate product
+            # calculate product   
             df_target_area['Heat Exposure Index'] = df_target_area_scaled[nameList[0]]
-            df_target_area['Heat Sensitivity Index'] = 1.0/6.0 *df_target_area_scaled[nameList[1:7].tolist()].sum(axis=1)
+            df_target_area['Heat Sensitivity Index'] = 1.0/6.0 *df_target_area_scaled[nameList[2:7].tolist()].sum(axis=1)-df_target_area_scaled[nameList[1].tolist()]
             df_target_area['Adaptive Capability Index'] = 1.0/2.0*df_target_area_scaled[nameList[7:].tolist()].sum(axis=1)
-            df_target_area['Heat Vulnerability Score'] = 1.0/3.0 * (df_target_area[['Heat Exposure Index','Heat Sensitivity Index','Adaptive Capability Index']].sum(axis=1))
+            df_target_area['Heat Vulnerability Score'] = 1.0/3.0 * (df_target_area[['Heat Exposure Index','Heat Sensitivity Index']].sum(axis=1) - pd.Series(df_target_area['Adaptive Capability Index']))
             progressbar.UpdateBar(current_count=75, max=100) 
             # output
             makeOutput(df_target_area)
             progressbar.UpdateBar(current_count=100, max=100) 
             
+        # if func == 'Heat Vulnerability Index':
+                
+        #     df_target_area, df_target_area_scaled = readGroupScaleDataset([LST,NDVI,NDBI,PopDens,Age65,Age4,PopNC,EduL, IncL],nameList.tolist(),progressbar)
+        #     # calculate product
+        #     df_target_area['Heat Exposure Index'] = df_target_area_scaled[nameList[0]]
+        #     df_target_area['Heat Sensitivity Index'] = 1.0/6.0 *df_target_area_scaled[nameList[1:7].tolist()].sum(axis=1)
+        #     df_target_area['Adaptive Capability Index'] = 1.0/2.0*df_target_area_scaled[nameList[7:].tolist()].sum(axis=1)
+        #     df_target_area['Heat Vulnerability Score'] = 1.0/3.0 * (df_target_area[['Heat Exposure Index','Heat Sensitivity Index','Adaptive Capability Index']].sum(axis=1))
+        #     progressbar.UpdateBar(current_count=60, max=100) 
+        #     # quintile indices
+        #     df_target_area['Heat Vulnerability Index'] = pd.qcut(df_target_area.loc[df_target_area[nameList[3]] != 0, 'Heat Vulnerability Score'], 5, labels=False)
+        #     progressbar.UpdateBar(current_count=70, max=100) 
+        #     # deal with 0
+        #     df_target_area.loc[df_target_area[nameList[3]] != 0, 'Heat Vulnerability Index'] += 1
+        #     df_target_area.loc[df_target_area[nameList[3]] == 0, 'Heat Vulnerability Index'] = 0
+        #     progressbar.UpdateBar(current_count=80, max=100) 
+        #     # output
+        #     makeOutput(df_target_area)
+        #     progressbar.UpdateBar(current_count=100, max=100) 
+
+        ## calculation formula changed 
         if func == 'Heat Vulnerability Index':
                 
             df_target_area, df_target_area_scaled = readGroupScaleDataset([LST,NDVI,NDBI,PopDens,Age65,Age4,PopNC,EduL, IncL],nameList.tolist(),progressbar)
             # calculate product
             df_target_area['Heat Exposure Index'] = df_target_area_scaled[nameList[0]]
-            df_target_area['Heat Sensitivity Index'] = 1.0/6.0 *df_target_area_scaled[nameList[1:7].tolist()].sum(axis=1)
+            df_target_area['Heat Sensitivity Index'] = 1.0/6.0 *df_target_area_scaled[nameList[2:7].tolist()].sum(axis=1)-df_target_area_scaled[nameList[1].tolist()]
             df_target_area['Adaptive Capability Index'] = 1.0/2.0*df_target_area_scaled[nameList[7:].tolist()].sum(axis=1)
-            df_target_area['Heat Vulnerability Score'] = 1.0/3.0 * (df_target_area[['Heat Exposure Index','Heat Sensitivity Index','Adaptive Capability Index']].sum(axis=1))
+            df_target_area['Heat Vulnerability Score'] = 1.0/3.0 * (df_target_area[['Heat Exposure Index','Heat Sensitivity Index']].sum(axis=1)- pd.Series(df_target_area['Adaptive Capability Index']))
             progressbar.UpdateBar(current_count=60, max=100) 
-            # quintile indices
-            df_target_area['Heat Vulnerability Index'] = pd.qcut(df_target_area.loc[df_target_area[nameList[3]] != 0, 'Heat Vulnerability Score'], 5, labels=False)
+            ## quintile method changed to Natural Breaks
+            jnb = JenksNaturalBreaks(5)
+            jnb.fit(df_target_area.loc[df_target_area[nameList[3]] != 0, 'Heat Vulnerability Score'])
+            df_target_area.loc[df_target_area[nameList[3]] != 0, 'Heat Vulnerability Index'] = jnb.labels_
             progressbar.UpdateBar(current_count=70, max=100) 
             # deal with 0
             df_target_area.loc[df_target_area[nameList[3]] != 0, 'Heat Vulnerability Index'] += 1
@@ -269,13 +333,15 @@ def calculateProduct(func, progressbar, LST = None, NDVI= None, NDBI= None, PopD
             # output
             makeOutput(df_target_area)
             progressbar.UpdateBar(current_count=100, max=100) 
+        
     # catch exception
-    except Exception:
+    except Exception: 
+        traceback.print_exc()
         createErrorWindow('Please check your dataset format.')
  
          
 def main():
-    window = make_window()
+    window = make_window(get_ppi())
     # initiate variables
     func, LST, NDVI, NDBI, PopDens, Age65, Age4, PopNC, EduL, IncL = None, None, None, None, None, None, None, None, None, None
     progress_bar = window.Rows[2][0]._GetElementAtLocation((0,1))
@@ -353,10 +419,10 @@ def main():
 
 if __name__ == '__main__':
     # sg.theme('black')
+    # print(get_ppi())
     sg.theme('Default1')
     # sg.theme('dark green 7')
-
-    try:   
+    try:        
         main()
     except Exception:
         createErrorWindow('Unexpected error.')
