@@ -19,7 +19,7 @@ The iHVI desktop toolkit  was developed in the Python 3 environment. The primary
 
 2. **Extract the Files**: After downloading, unzip the package to your preferred location.
 
-3. **Launch the Toolkit**: Navigate to the extracted folder and run the executable file by double-clicking on *iHVI Toolkit\iHVI Toolkit.exe*.
+3. **Launch the Toolkit**: Navigate to the extracted folder and run the executable file by double-clicking on *"iHVI_Toolkit\iHVI_Toolkit.exe"*.
 
 ## Technical documentation
 
