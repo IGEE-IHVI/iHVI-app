@@ -25,6 +25,7 @@ The data input buttons are on the second row, including LST, NDVI, NDBI, Populat
 5. The data input buttons are on the second row, click on each button to upload the respective environmental and socio-economic indicator files. When  “X” changes to a “|.” it indicates all files are inputted correctly.
 
 <img src="Step_6.png" style="width:100%;"/>
+
 6. Click on three index buttons to calculate Heat Exposure Index, Heat Sensitivity Index, and Adaptive Capability Index. Click on 'select folder' button to download the csv file in specific folder.
 
 7. Click on Heat Vulnerability Index button to calculate the vulnerability index for the SA1s. 
