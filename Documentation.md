@@ -13,7 +13,7 @@ The data input buttons are on the second row, including LST, NDVI, NDBI, Populat
 
 <img src="Indicators.png" style="width:100%;"/>
 
-3. Prepare seperate .csv files for each indicators/parameters for input. 
+3. Prepare seperate .csv files for each indicators/parameters for input. You can also find an example datasets [here](https://github.com/IGEE-IHVI/iHVI-app/tree/main/sample%20data).
 
 <img src="Data_indicator_CSV.png" style="width:100%;"/>
 
@@ -21,6 +21,8 @@ The data input buttons are on the second row, including LST, NDVI, NDBI, Populat
 [Note: You can have other columns for the data and different file names but this is will not affect the process.]. One example of the file column is shown below: 
 
 <img src="Column_name.png" style="width:100%;"/>
+
+
 
 5. The data input buttons are on the second row, click on each button to upload the respective environmental and socio-economic indicator files. When  “X” changes to a “|.” it indicates all files are inputted correctly.
 
