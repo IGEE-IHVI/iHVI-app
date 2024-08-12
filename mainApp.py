@@ -147,10 +147,10 @@ def make_window(dpi):
 
     HVIMap[0,1] = sg.Button(size = textSize, font=textFont, button_text='iGEE',button_color=('black', '#FFFAF0'))
     HVIMap[0,5] = sg.Button(size = textSize, font=textFont, button_text='ABS',button_color=('black', '#FFFAF0'))
-
+    textFont_ = ("Helvetica", 48 * 30 /dpi)
     # progress bar and select output path
-    Status = [[sg.Text('Status'),sg.ProgressBar(100, orientation = 'h', key='-PROGRESS BAR-'),sg.FolderBrowse(button_text ='Select folder', key ='Output Path',target='Output Path', size=(170,30))]]
-    mainFrame =[[sg.Frame('',element_justification='c',layout = HVIMap,background_color='white',border_width=0)],[sg.T()],[sg.Frame('',layout =Status)],[sg.Stretch(),sg.Text('AURIN | RMIT @ GISALL © 2022',text_color='Gray',font=("Helvetica", 8)),sg.Stretch()]]
+    Status = [[sg.Text('Status', font=textFont_),sg.ProgressBar(100, orientation = 'h', key='-PROGRESS BAR-'),sg.FolderBrowse(button_text ='Select folder', key ='Output Path',target='Output Path', size=(170,40), font=textFont_)]]
+    mainFrame =[[sg.Frame('',element_justification='c',layout = HVIMap,background_color='white',border_width=0)],[sg.T()],[sg.Frame('',layout =Status)],[sg.Stretch(),sg.Text('AURIN | RMIT @ GISALL © 2024',text_color='Gray',font=("Helvetica", 8)),sg.Stretch()]]
     window = sg.Window('IHVI Toolkit', font=("Helvetica", 10), icon= resource_path('logo.ico'), layout = mainFrame, finalize=True,resizable=True)
     return window
 
