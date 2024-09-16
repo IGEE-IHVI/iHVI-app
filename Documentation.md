@@ -13,7 +13,7 @@ The data input buttons are on the second row, including LST, NDVI, NDBI, Populat
 
 <img src="Indicators.png" style="width:100%;"/>
 
-3. Prepare seperate .csv files for each indicators/parameters for input. You can also find an example datasets [here](https://github.com/IGEE-IHVI/iHVI-app/tree/main/sample%20data).
+3. Prepare seperate .csv files for each indicators/parameters for input. You can also find the datasets for whole Australia's SA1s (year 2021) [here](https://github.com/IGEE-IHVI/iHVI-app/tree/main/sample%20data).
 
 <img src="Data_indicators_CSV.png" style="width:100%;"/>
 
