@@ -15,7 +15,7 @@ The data input buttons are on the second row, including LST, NDVI, NDBI, Populat
 
 3. Prepare seperate .csv files for each indicators/parameters for input. You can also find an example datasets [here](https://github.com/IGEE-IHVI/iHVI-app/tree/main/sample%20data).
 
-<img src="Data_indicator_CSV.png" style="width:100%;"/>
+<img src="Data_indicators_CSV.png" style="width:100%;"/>
 
 4. Make sure the input data have two important columns marked in red in image below. For environmental parameters columns required are: SA1_CODE21 and LSTmean, SA1_CODE21 and NDVImean, SA1_CODE21 and NDBImean and For socio-economic indicators columns required are: Population Density, SA1_CODE21 and Age_65+, SA1_CODE21 and Age_4-, SA1_CODE21 and Population need care, SA1_CODE21 and Education level, SA1_CODE21 and Income level.
 [Note: You can have other columns for the data and different file names but this is will not affect the process.]. One example of the file column is shown below: 
